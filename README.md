@@ -26,14 +26,19 @@ Things you may want to cover:
 # DB設計
 
 ## users table
-| Column     | Type   | Options     |
-| ---------- | ------ | ----------- |
-| email      | string | null: false |
-| password   | string | null: false |
-| name       | string | null: false |
+| Column                | Type    | Options     |
+| --------------------- | ------- | ----------- |
+| email                 | string  | null: false |
+| password              | string  | null: false |
+| last_name             | string  | null: false |
+| first_name            | string  | null: false |
+| last_name_ruby        | string  | null: false |
+| first_name_ruby       | string  | null: false |
+| birthday              | integer | null: false |
 
 ### Association
 * has_many :items
+- has_one :purchase
 
 ## items table
 | Column           | Type       | Options           |
@@ -44,15 +49,13 @@ Things you may want to cover:
 
 ### Association
 - belongs_to :user
+- has_one :purchase
 
 ## purchases table
-| Column                     | Type        | Options           |
-| -------------------------- | ----------- | ------------------|
-| card_number                | integer     | null: false       |
-| selling_price              | integer     | null: false       |
-| shipping fee               | string      | null: false       |
-| shipment_from_address      | string      | null: false       |
-| estimated_date_of_shipment | string      | null: false       |
+| Column           | Type       | Options           |
+| ---------------- | ---------- | ------------------|
+| user_id          | references | foreign_key: true |
+| item_id          | references | foreign_key: true |
 
 ### Association
 - has_one :shipping_address
