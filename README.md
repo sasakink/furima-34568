@@ -34,6 +34,7 @@ Things you may want to cover:
 | first_name            | string  | null: false               |
 | last_name_kana        | string  | null: false               |
 | first_name_kana       | string  | null: false               |
+| nickname              | string  | null: false               |
 | birthday              | date    | null: false               |
 
 ### Association
@@ -45,13 +46,13 @@ Things you may want to cover:
 | ---------------------------- | ---------- | ------------------|
 | item_name                    | string     | null: false       |
 | item_description             | string     | null: false       |
-| category                     | string     | null: false       |
-| item_condition               | string     | null: false       |
-| delivery_fee                 | integer    | null: false       |
-| delivery_source              | string     | null: false       |
-| delivery_date                | string     | null: false       |
+| category_id                  | integer    | null: false       |
+| item_condition_id            | integer    | null: false       |
+| delivery_fee_id              | integer    | null: false       |
+| delivery_source_id           | integer    | null: false       |
+| delivery_date_id             | integer    | null: false       |
 | selling_price                | integer    | null: false       |
-| user_id                      | references | foreign_key: true |
+| user                         | references | foreign_key: true |
 
 ### Association
 - belongs_to :user
@@ -77,7 +78,7 @@ Things you may want to cover:
 | address                    | string      | null: false       |
 | building_name              | string      |                   |
 | phone_number               | string      | null: false       |
-| purchase_id                | references  | foreign_key: true |
+| purchase                   | references  | foreign_key: true |
 
 ### Association
 - belongs_to :purchase
