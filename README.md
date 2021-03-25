@@ -45,7 +45,7 @@ Things you may want to cover:
 | Column                       | Type       | Options           |
 | ---------------------------- | ---------- | ------------------|
 | name                         | string     | null: false       |
-| description                  | string     | null: false       |
+| description                  | text       | null: false       |
 | category_id                  | integer    | null: false       |
 | item_condition_id            | integer    | null: false       |
 | delivery_fee_id              | integer    | null: false       |
@@ -73,7 +73,7 @@ Things you may want to cover:
 | Column                     | Type        | Options           |
 | -------------------------- | ----------- | ------------------|
 | postal_code                | string      | null: false       |
-| prefectures                | string      | null: false       |
+| delivery_source_id         | string      | null: false       |
 | city                       | string      | null: false       |
 | address                    | string      | null: false       |
 | building_name              | string      |                   |
