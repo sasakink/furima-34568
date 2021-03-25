@@ -44,8 +44,8 @@ Things you may want to cover:
 ## items table
 | Column                       | Type       | Options           |
 | ---------------------------- | ---------- | ------------------|
-| item_name                    | string     | null: false       |
-| item_description             | string     | null: false       |
+| name                         | string     | null: false       |
+| description                  | string     | null: false       |
 | category_id                  | integer    | null: false       |
 | item_condition_id            | integer    | null: false       |
 | delivery_fee_id              | integer    | null: false       |
@@ -59,10 +59,10 @@ Things you may want to cover:
 - has_one :purchase
 
 ## purchases table
-| Column           | Type       | Options           |
-| ---------------- | ---------- | ------------------|
-| user_id          | references | foreign_key: true |
-| item_id          | references | foreign_key: true |
+| Column        | Type       | Options           |
+| ------------- | ---------- | ------------------|
+| user          | references | foreign_key: true |
+| item          | references | foreign_key: true |
 
 ### Association
 - belongs_to :user
