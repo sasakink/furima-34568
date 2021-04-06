@@ -11,6 +11,7 @@ class Item < ApplicationRecord
   validates :category_id, :item_condition_id, :delivery_fee_id, :delivery_source_id, :delivery_date_id,
             numericality: { other_than: 0 }
   with_options presence: true do
+    validates :image
     validates :name
     validates :description
     validates :category_id

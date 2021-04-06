@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Item, type: :model do
-  # pending "add some examples to (or delete) #{__FILE__}"
   before do
     @item = FactoryBot.build(:item)
   end
@@ -13,6 +12,11 @@ RSpec.describe Item, type: :model do
       end
     end
     context '商品出品できない時' do
+      it 'imageが空では出品できない' do
+        @item.image = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Image can't be blank")
+      end
       it 'nameが空では出品できない' do
         @item.name = ' '
         @item.valid?
@@ -24,29 +28,45 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Description can't be blank")
       end
       it 'category_idが「id:0 --」では出品できない' do
-        @item.category_id = '0'
+        @item.category_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include('Category must be other than 0')
       end
       it 'item_condition_idが「id:0 --」では出品できない' do
-        @item.item_condition_id = '0'
+        @item.item_condition_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include('Item condition must be other than 0')
       end
       it 'delivery_fee_idが「id:0 --」では出品できない' do
-        @item.delivery_fee_id = '0'
+        @item.delivery_fee_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include('Delivery fee must be other than 0')
       end
       it 'delivery_source_idが「id:0 --」では出品できない' do
-        @item.delivery_source_id = '0'
+        @item.delivery_source_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include('Delivery source must be other than 0')
       end
       it 'delivery_date_idが「id:0 --」では出品できない' do
-        @item.delivery_date_id = '0'
+        @item.delivery_date_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include('Delivery date must be other than 0')
+      end
+      it 'selling_priceが空では出品できない' do
+        @item.selling_price = ' '
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Selling price can't be blank",
+                                                      'Selling price は半角数字、¥300~¥9,999,999で入力してください。')
+      end
+      it 'selling_priceが半角英語では出品できない' do
+        @item.selling_price = 'aaa'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Selling price は半角数字、¥300~¥9,999,999で入力してください。')
+      end
+      it 'selling_priceが半角英数混合では出品できない' do
+        @item.selling_price = '111aaa'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Selling price は半角数字、¥300~¥9,999,999で入力してください。')
       end
       it 'selling_priceが全角では出品できない' do
         @item.selling_price = '５００'
@@ -54,12 +74,12 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include('Selling price は半角数字、¥300~¥9,999,999で入力してください。')
       end
       it 'selling_priceが¥299以下では出品できない' do
-        @item.selling_price = '299'
+        @item.selling_price = 299
         @item.valid?
         expect(@item.errors.full_messages).to include('Selling price は半角数字、¥300~¥9,999,999で入力してください。')
       end
       it 'selling_priceが¥10,000,000以上では出品できない' do
-        @item.selling_price = '10000000'
+        @item.selling_price = 10_000_000
         @item.valid?
         expect(@item.errors.full_messages).to include('Selling price は半角数字、¥300~¥9,999,999で入力してください。')
       end
