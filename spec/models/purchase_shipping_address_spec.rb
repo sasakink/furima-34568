@@ -3,11 +3,18 @@ require 'rails_helper'
 RSpec.describe PurchaseShippingAddress, type: :model do
   describe '配送先住所と購入情報の保存' do
     before do
-      @purchase_shipping_address = FactoryBot.build(:purchase_shipping_address)
+      @user = FactoryBot.create(:user)
+      @item = FactoryBot.create(:item)
+      @purchase_shipping_address = FactoryBot.build(:purchase_shipping_address, user_id: @user.id, item_id: @item.id)
+      sleep(1)
     end
 
     context '内容に問題がない場合' do
       it ' 必須の値が正しく入力されていれば保存できること' do
+        expect(@purchase_shipping_address).to be_valid
+      end
+      it 'building_nameは空でも保存できること' do
+        @purchase_shipping_address.building_name = nil
         expect(@purchase_shipping_address).to be_valid
       end
     end
@@ -24,7 +31,7 @@ RSpec.describe PurchaseShippingAddress, type: :model do
         expect(@purchase_shipping_address.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
       end
       it 'delivery_source_idを選択していないと保存できないこと' do
-        @purchase_shipping_address.delivery_source_id = '0'
+        @purchase_shipping_address.delivery_source_id = 0
         @purchase_shipping_address.valid?
         expect(@purchase_shipping_address.errors.full_messages).to include("Delivery source can't be blank")
       end
@@ -37,10 +44,6 @@ RSpec.describe PurchaseShippingAddress, type: :model do
         @purchase_shipping_address.address = nil
         @purchase_shipping_address.valid?
         expect(@purchase_shipping_address.errors.full_messages).to include("Address can't be blank")
-      end
-      it 'building_nameは空でも保存できること' do
-        @purchase_shipping_address.building_name = nil
-        expect(@purchase_shipping_address).to be_valid
       end
       it 'phone_numberは空では保存できないこと' do
         @purchase_shipping_address.phone_number = nil
@@ -61,6 +64,11 @@ RSpec.describe PurchaseShippingAddress, type: :model do
         @purchase_shipping_address.phone_number = '123456789012'
         @purchase_shipping_address.valid?
         expect(@purchase_shipping_address.errors.full_messages).to include('Phone number は11桁以内で入力してください。')
+      end
+      it 'phone_numberは英数混合では保存できないこと' do
+        @purchase_shipping_address.phone_number = '1a'
+        @purchase_shipping_address.valid?
+        expect(@purchase_shipping_address.errors.full_messages).to include('Phone number is invalid.')
       end
       it 'user_idは空では保存できなこと' do
         @purchase_shipping_address.user_id = nil
