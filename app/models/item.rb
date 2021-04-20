@@ -11,7 +11,7 @@ class Item < ApplicationRecord
   belongs_to :delivery_date
 
   validates :category_id, :item_condition_id, :delivery_fee_id, :delivery_source_id, :delivery_date_id,
-            numericality: { other_than: 0 }
+            numericality: { other_than: 0, message: 'を入力してください' }
   with_options presence: true do
     validates :image
     validates :name
