@@ -25,4 +25,12 @@ class Item < ApplicationRecord
               numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999,
                               message: 'は半角数字、¥300~¥9,999,999で入力してください。' }
   end
+
+  def self.search(search)
+    if search != ""
+      Item.where('name LIKE(?)', "%#{search}%")
+    else
+      Item.all
+    end
+  end
 end

@@ -42,7 +42,11 @@
 }
 
 .search-icon {
-  width: 100%;
+  width: 7vh;
+  border: 0;
+  cursor: pointer;
+  padding: 7px;
+  background-color: #3ccace;
 }
 
 .nav {

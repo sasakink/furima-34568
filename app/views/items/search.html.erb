@@ -1,0 +1,21 @@
+<header class='top-page-header'>
+<div class='search-bar-contents'>
+<%= link_to image_tag("furima-logo-color.png", class:"furima-icon"), "/" %>
+<%= form_with(url: search_items_path, local: true, method: :get, class: "search-form") do |form| %>
+  <%= form.text_field :keyword, placeholder: 'キーワードから探す', class: 'input-box' %>
+  <%= form.submit "検索", class: "search-icon" %>
+<% end %>
+</div>
+<div class='nav'>
+    <ul class='lists-left'>
+      <li><%= link_to 'カテゴリー', "#", class: "category-list" %></li>
+      <li><%= link_to 'ブランド', "#", class: "brand-list" %></li>
+    </ul>
+</header>
+<div class="contents row">
+<ul class='item-lists'>
+  <% @items.each do |item| %>
+    <%= render partial: "shared/item", locals: { item: item } %>
+  <% end %>
+  </ul>
+</div>
