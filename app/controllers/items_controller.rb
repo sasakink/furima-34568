@@ -2,6 +2,8 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :search]
   before_action :move_to_index, only: [:edit, :update, :destroy]
   before_action :move_to_rootpath, only: [:edit, :update]
+  before_action :search_product, only: [:index, :search, :show]
+  before_action :set_item_column, only: [:index, :search, :show]
 
   def new
     @item = Item.new
@@ -41,7 +43,8 @@ class ItemsController < ApplicationController
   end
 
   def search
-    @items = Item.search(params[:keyword]).order("created_at DESC")
+    @results = @p.result.order('created_at DESC')
+    # @items = Item.search(params[:keyword]).order("created_at DESC")
   end
 
   private
@@ -58,5 +61,13 @@ class ItemsController < ApplicationController
 
   def move_to_rootpath
     redirect_to root_path if (current_user.id = @item.user.id) && @item.purchase
+  end
+
+  def search_product
+    @p = Item.ransack(params[:q]) # 検索オブジェクトを生成
+  end
+
+  def set_item_column
+    @item_name = Item.select('name').distinct  # 重複なくnameカラムのデータを取り出す
   end
 end
