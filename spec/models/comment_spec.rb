@@ -6,6 +6,7 @@ RSpec.describe Comment, type: :model do
       @user = FactoryBot.create(:user)
       @item = FactoryBot.create(:item)
       @comment = FactoryBot.build(:comment, user_id: @user.id, item_id: @item.id)
+      sleep(1)
     end
 
     context '内容に問題がない場合' do
